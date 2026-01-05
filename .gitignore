@@ -1,0 +1,156 @@
+# =============================================================================
+# CloudGraph IDE - Git Ignore
+# =============================================================================
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+node_modules/
+.pnp/
+.pnp.js
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+.eggs/
+*.egg-info/
+*.egg
+
+# =============================================================================
+# Build Output
+# =============================================================================
+# Frontend
+frontend/dist/
+frontend/build/
+*.tsbuildinfo
+
+# Backend
+backend/dist/
+*.whl
+
+# =============================================================================
+# Environment & Secrets
+# =============================================================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# =============================================================================
+# IDE & Editors
+# =============================================================================
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# VSCode - keep settings, ignore history/extensions
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# =============================================================================
+# OS Files
+# =============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# =============================================================================
+# Logs & Temp Files
+# =============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =============================================================================
+# Testing & Coverage
+# =============================================================================
+coverage/
+*.lcov
+.nyc_output/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+# =============================================================================
+# Terraform
+# =============================================================================
+deploy/aws/terraform/.terraform/
+deploy/aws/terraform/*.tfstate
+deploy/aws/terraform/*.tfstate.*
+deploy/aws/terraform/*.tfvars
+!deploy/aws/terraform/*.tfvars.example
+deploy/aws/terraform/.terraform.lock.hcl
+deploy/aws/terraform/crash.log
+deploy/aws/terraform/override.tf
+deploy/aws/terraform/override.tf.json
+deploy/aws/terraform/*_override.tf
+deploy/aws/terraform/*_override.tf.json
+
+# =============================================================================
+# Docker
+# =============================================================================
+# Ignore nothing by default, but exclude local overrides
+docker-compose.override.yml
+docker-compose.local.yml
+
+# =============================================================================
+# Misc
+# =============================================================================
+# Local development files
+*.local
+.claude/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff
+.ruff_cache/
+
+# SQLite databases (local dev)
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup

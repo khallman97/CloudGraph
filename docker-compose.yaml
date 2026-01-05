@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cloudgraph-db
+    environment:
+      - POSTGRES_USER=cloudgraph
+      - POSTGRES_PASSWORD=cloudgraph
+      - POSTGRES_DB=cloudgraph
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - cloud-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cloudgraph"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: cloudgraph-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql://cloudgraph:cloudgraph@db:5432/cloudgraph
+      - SECRET_KEY=cloudgraph-dev-secret-key-change-in-production
+      # AWS Configuration (optional - leave empty for fallback data)
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+      - AWS_CACHE_TTL_SECONDS=${AWS_CACHE_TTL_SECONDS:-3600}
+    networks:
+      - cloud-net
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: cloudgraph-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - cloud-net
+    depends_on:
+      - backend
+
+networks:
+  cloud-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

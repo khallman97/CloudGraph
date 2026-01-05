@@ -1,0 +1,72 @@
+# =============================================================================
+# CloudGraph IDE - Terraform Variables
+# =============================================================================
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to version control (it contains secrets)
+#
+# Required: db_password, jwt_secret
+# Recommended: key_name, allowed_ssh_cidrs
+
+# -----------------------------------------------------------------------------
+# AWS Configuration
+# -----------------------------------------------------------------------------
+aws_region  = "us-east-1"
+environment = "prod"
+
+# -----------------------------------------------------------------------------
+# Network
+# -----------------------------------------------------------------------------
+# Use default VPC for simpler setup (recommended for free tier)
+use_default_vpc = true
+
+# -----------------------------------------------------------------------------
+# EC2 (Backend Server)
+# -----------------------------------------------------------------------------
+instance_type = "t2.micro"  # Free tier eligible
+
+# SSH Key - create one in AWS Console > EC2 > Key Pairs first
+key_name = "cloudgraph-key"
+
+# Restrict SSH access to your IP (find at https://ifconfig.me)
+allowed_ssh_cidrs = ["YOUR_IP_ADDRESS/32"]
+
+# Root volume (8GB is enough for backend only)
+root_volume_size = 8
+
+# -----------------------------------------------------------------------------
+# RDS (PostgreSQL Database)
+# -----------------------------------------------------------------------------
+rds_instance_class    = "db.t3.micro"  # Free tier eligible
+rds_allocated_storage = 20             # Up to 20GB is free tier
+
+# Database password (CHANGE THIS!)
+db_password = "your-secure-db-password-here"
+
+# -----------------------------------------------------------------------------
+# Application
+# -----------------------------------------------------------------------------
+app_name = "cloudgraph-ide"
+
+# JWT Secret - generate with: openssl rand -hex 32
+jwt_secret = "your-jwt-secret-here"
+
+# -----------------------------------------------------------------------------
+# Custom Domain (Optional)
+# -----------------------------------------------------------------------------
+# If you have a domain, create an ACM certificate in us-east-1 first
+# domain_name         = "cloudgraph.yourdomain.com"
+# acm_certificate_arn = "arn:aws:acm:us-east-1:123456789:certificate/abc-123"
+
+# -----------------------------------------------------------------------------
+# GitHub Actions CI/CD
+# -----------------------------------------------------------------------------
+# Your GitHub repository for OIDC authentication (format: owner/repo)
+github_repository = "your-username/cloudgraph-ide"
+
+# -----------------------------------------------------------------------------
+# AWS Credentials for App (Optional)
+# -----------------------------------------------------------------------------
+# These allow the app to fetch live AWS data (instance types, AMIs, etc.)
+# If not set, the app uses fallback/static data
+# app_aws_access_key_id     = "AKIA..."
+# app_aws_secret_access_key = "..."
